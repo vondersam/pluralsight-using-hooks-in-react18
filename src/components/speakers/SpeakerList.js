@@ -1,7 +1,8 @@
-import SpeakerLine from "./SpeakerLine";
-import { speakerList } from "../../../speakersData";
+import SpeakerLine from './SpeakerLine';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function List() {
+function List({ speakers }) {
   const updatingId = 0; // 1269;
   const isPending = false;
 
@@ -35,7 +36,7 @@ function List() {
       </div>
 
       <div className="row g-3">
-        {speakerList.map(function (speakerRec) {
+        {speakers.map(function (speakerRec) {
           const highlight = false;
           return (
             <SpeakerLine
@@ -54,9 +55,23 @@ function List() {
 
 const SpeakerList = () => {
   const darkTheme = false;
+  const [speakers, setSpeakers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  async function loadSpeakers() {
+    setLoading(true);
+    const results = await axios.get('/api/speakers');
+    setSpeakers(results.data);
+    setLoading(false);
+  }
+  useEffect(() => {
+    loadSpeakers();
+  }, []);
+
+  if (loading) return <div>Loading</div>;
   return (
-    <div className={darkTheme ? "theme-dark" : "theme-light"}>
-      <List />
+    <div className={darkTheme ? 'theme-dark' : 'theme-light'}>
+      <List speakers={speakers} />
     </div>
   );
 };
