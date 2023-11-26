@@ -1,33 +1,34 @@
+import DemoApp from './demoApp';
 import { useState, useEffect } from 'react';
 
+const localStateValues = [];
+let localStateValueIndex = 0;
+
 export default function Demo() {
-  const [text1, setText1] = useState('First');
+  function useMyState(initial) {
+    const localStateValueIndexLocal = localStateValueIndex; // closure
+    if (localStateValues[localStateValueIndexLocal] === undefined) {
+      localStateValues[localStateValueIndexLocal] = initial;
+    }
+    const setValue = (val) => {
+      localStateValues[localStateValueIndexLocal] = val;
+      reRenderMe();
+    };
+    localStateValueIndex++;
+    const retVals = [localStateValues[localStateValueIndexLocal], setValue];
+    return retVals;
+  }
+  const [cnt, setcnt] = useState(0);
   useEffect(() => {
-    document.title = `${text1.length}`;
-  });
-  const [text2, setText2] = useState('Second');
+    console.log(localStateValues);
+  }, [cnt]);
+  function reRenderMe() {
+    setcnt(cnt + 1);
+  }
+  localStateValueIndex = 0;
   return (
     <>
-      <h1>Simple State and Life Cycle Management</h1>
-      <div className="container">
-        <input
-          type="text"
-          onChange={(e) => setText1(e.target.value)}
-          value={text1}
-        />
-        <hr />
-        <input
-          type="text"
-          onChange={(e) => setText2(e.target.value)}
-          value={text2}
-        />
-        <hr />
-        <h2>
-          <i>
-            {text1} {text2}
-          </i>
-        </h2>
-      </div>
+      <DemoApp useState={useMyState} />
     </>
   );
 }
