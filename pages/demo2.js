@@ -2,8 +2,11 @@ import { useReducer } from 'react';
 
 export default function Demo2() {
   function reducer(state, action) {
-    if (action.type === 'increment') {
-      return state + 1;
+    switch (action.type) {
+      case 'increment':
+        return state + action.incrementValue;
+      default:
+        return action;
     }
   }
   const [state, dispatch] = useReducer(reducer, 0);
@@ -11,7 +14,11 @@ export default function Demo2() {
   return (
     <>
       <h2>Counter with useReducer</h2>
-      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+      <button
+        onClick={() => dispatch({ type: 'increment', incrementValue: 3 })}
+      >
+        Increment
+      </button>
       <div>{state}</div>
     </>
   );
