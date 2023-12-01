@@ -1,8 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export default function Demo() {
   // Case #1 Reference the DOM
   const imgRef = useRef();
+  // Case #2 Reference value that does not cause re-render
+  const mouseOverCnt = useRef(0);
+  const [cnt, setCnt] = useState(0);
 
   return (
     <div clasName="container">
@@ -12,6 +15,8 @@ export default function Demo() {
         style={{ filter: 'grayscale(100%)' }}
         onMouseOver={() => {
           imgRef.current.style.filter = 'grayscale(0%)';
+          setCnt(cnt + 1);
+          mouseOverCnt.current++;
         }}
         onMouseOut={() => {
           imgRef.current.style.filter = 'grayscale(100%)';
@@ -20,7 +25,7 @@ export default function Demo() {
       <hr />
       <button
         onClick={() => {
-          alert('hello');
+          alert('Registered! mouseOverCnt:' + mouseOverCnt.current);
         }}
       >
         Register
