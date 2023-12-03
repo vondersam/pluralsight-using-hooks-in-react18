@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { SpeakersDataContext } from '../themecontexts/SpeakersDataContext';
+import { SpeakersDataContext } from '../contexts/SpeakersDataContext';
 
 export default function FavoriteSpeakerToggle({ speakerRec }) {
   const { updateSpeaker } = useContext(SpeakersDataContext);
