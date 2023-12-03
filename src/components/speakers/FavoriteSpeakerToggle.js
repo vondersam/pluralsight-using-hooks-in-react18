@@ -1,17 +1,20 @@
+import { useState, useContext } from 'react';
+import { SpeakersDataContext } from '../themecontexts/SpeakersDataContext';
+
 export default function FavoriteSpeakerToggle({ speakerRec }) {
-  const { updateSpeaker } = { updateSpeaker: () => {} };
-  const [updating, setUpdating] = [false, () => {}];
+  const { updateSpeaker } = useContext(SpeakersDataContext);
+  const [updating, setUpdating] = useState(false);
 
   return (
     <button
       className={
-        speakerRec.favorite ? "heartredbutton btn" : "heartdarkbutton btn"
+        speakerRec.favorite ? 'heartredbutton btn' : 'heartdarkbutton btn'
       }
       onClick={(e) => {
         e.preventDefault();
         const newSpeakerRec = {
           ...speakerRec,
-          favorite: !speakerRec.favorite,
+          favorite: !speakerRec.favorite
         };
         setUpdating(true);
         updateSpeaker(newSpeakerRec, () => {
