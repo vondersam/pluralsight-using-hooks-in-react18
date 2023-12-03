@@ -1,6 +1,6 @@
 import SpeakerLine from './SpeakerLine';
 import { useState, useEffect, useReducer, useContext } from 'react';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../themecontexts/themeContext';
 import axios from 'axios';
 
 function List({ state, updateSpeakers }) {

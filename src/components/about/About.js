@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { ThemeContext } from '../../App';
+import { ThemeContext } from '../themecontexts/themeContext';
 
 export default function About() {
-  const darkTheme = useContext(ThemeContext);
+  const { darkTheme } = useContext(ThemeContext);
   return (
     <div className={darkTheme ? 'theme-dark' : 'theme-light'}>
       <div className="container">
