@@ -1,4 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
+import { SpeakerMenuContext } from '../contexts/SpeakerMenuContext';
+
 export default function SpeakerImageToggleOnScroll({
   imageUrl,
   alt,
@@ -7,6 +9,9 @@ export default function SpeakerImageToggleOnScroll({
   const imageRef = useRef(null);
   const [inView, setInView] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { speakingSaturday, speakingSunday, searchText } = useContext(
+    SpeakerMenuContext
+  );
 
   const grayScale = inView ? 'grayscale(0%)' : 'grayscale(100%)';
 
@@ -21,7 +26,7 @@ export default function SpeakerImageToggleOnScroll({
     return () => {
       window.removeEventListener('scroll', scrollHandler);
     };
-  }, []);
+  }, [speakingSaturday, speakingSunday, searchText]);
 
   function isInView() {
     const rect = imageRef.current.getBoundingClientRect();
